@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "apps": [
+    {"id":"plant","name":"植物","url":"https://pipipopo7410.github.io/plant-all/","offline":{"mode":"external"}},
+    {"id":"enzyme","name":"酵素","url":"https://pipipopo7410.github.io/ipad-test-enzyme/","offline":{"mode":"external"}},
+    {"id":"circulation","name":"循環","url":"https://pipipopo7410.github.io/ipad-test-blood/","offline":{"mode":"external"}},
+    {"id":"nervous","name":"神經","url":"https://pipipopo7410.github.io/ipad-test-neuron/","offline":{"mode":"external"}},
+    {"id":"sugar","name":"血糖","url":"https://pipipopo7410.github.io/ipad-test-sugar/","offline":{"mode":"external"}},
+    {"id":"ammonia","name":"排氨","url":"https://pipipopo7410.github.io/ipad-test-anomi/","offline":{"mode":"external"}},
+    {"id":"reproduction","name":"生殖","url":"https://pipipopo7410.github.io/chromosome/","offline":{"mode":"external"}},
+    {"id":"genetics","name":"遺傳","url":"https://pipipopo7410.github.io/Bio---genetics/","offline":{"mode":"external"}},
+    {"id":"classification","name":"分類","url":"https://pipipopo7410.github.io/5kingdoms/","offline":{"mode":"external"}}
+  ]
+}
