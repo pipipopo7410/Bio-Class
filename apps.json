@@ -1,14 +1,33 @@
 {
-  "version": 1,
-  "apps": [
-    {"id":"plant","name":"植物","url":"https://pipipopo7410.github.io/plant-all/","offline":{"mode":"external"}},
-    {"id":"enzyme","name":"酵素","url":"https://pipipopo7410.github.io/ipad-test-enzyme/","offline":{"mode":"external"}},
-    {"id":"circulation","name":"循環","url":"https://pipipopo7410.github.io/ipad-test-blood/","offline":{"mode":"external"}},
-    {"id":"nervous","name":"神經","url":"https://pipipopo7410.github.io/ipad-test-neuron/","offline":{"mode":"external"}},
-    {"id":"sugar","name":"血糖","url":"https://pipipopo7410.github.io/ipad-test-sugar/","offline":{"mode":"external"}},
-    {"id":"ammonia","name":"排氨","url":"https://pipipopo7410.github.io/ipad-test-anomi/","offline":{"mode":"external"}},
-    {"id":"reproduction","name":"生殖","url":"https://pipipopo7410.github.io/chromosome/","offline":{"mode":"external"}},
-    {"id":"genetics","name":"遺傳","url":"https://pipipopo7410.github.io/Bio---genetics/","offline":{"mode":"external"}},
-    {"id":"classification","name":"分類","url":"https://pipipopo7410.github.io/5kingdoms/","offline":{"mode":"external"}}
+  "version": "4.0.0",
+  "title": "剛剛數位小教室",
+  "topics": [
+    {
+      "id": "plant", "name": "植物", "children": [
+        {"id": "plant-classification", "name": "分類", "url": "https://pipipopo7410.github.io/Plant-Classification/"},
+        {"id": "plant-physiology", "name": "運輸與光合", "url": "https://pipipopo7410.github.io/Plant-2-Physiology/"},
+        {"id": "plant-reproduction", "name": "生殖與遺傳", "url": "https://pipipopo7410.github.io/Plant-Reproduction/"}
+      ]
+    },
+    {"id": "enzyme", "name": "酵素", "url": "https://pipipopo7410.github.io/Enzyme-PhET/"},
+    {
+      "id": "circulation", "name": "循環", "children": [
+        {"id": "circulation-2d", "name": "2D 血液循環", "url": "https://pipipopo7410.github.io/Circulation-2D/"},
+        {"id": "circulation-3d", "name": "3D 血液循環", "url": "https://pipipopo7410.github.io/-Circulation-3D/"}
+      ]
+    },
+    {"id": "nervous", "name": "神經", "url": "https://pipipopo7410.github.io/Nervous-WordCards/"},
+    {"id": "glucose", "name": "血糖", "url": "https://pipipopo7410.github.io/Glucose-WordCards/"},
+    {"id": "ammonia", "name": "排氨", "url": "https://pipipopo7410.github.io/Ammonia-WordCards/"},
+    {"id": "reproduction", "name": "生殖", "url": "https://pipipopo7410.github.io/Chromosome-Counting/"},
+    {"id": "genetics", "name": "遺傳", "url": "https://pipipopo7410.github.io/Genetics-Monsters/"},
+    {
+      "id": "taxonomy", "name": "分類", "children": [
+        {"id": "taxonomy-1", "name": "整體複習", "url": "https://pipipopo7410.github.io/Taxonomy-Key/", "entry": {"type":"taxonomy", "stage":1}, "checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage1.html"]},
+        {"id": "taxonomy-2", "name": "單一生物特徵", "url": "https://pipipopo7410.github.io/Taxonomy-Key/", "entry": {"type":"taxonomy", "stage":2}, "checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage2.html"]},
+        {"id": "taxonomy-3", "name": "分類判斷", "url": "https://pipipopo7410.github.io/Taxonomy-Key/", "entry": {"type":"taxonomy", "stage":3}, "checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage3.html"]},
+        {"id": "taxonomy-4", "name": "檢索表練習", "url": "https://pipipopo7410.github.io/Taxonomy-Key/", "entry": {"type":"taxonomy", "stage":4}, "checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage4.html"]}
+      ]
+    }
   ]
 }

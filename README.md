@@ -1,77 +1,70 @@
-# 剛剛數位小教室 — 九宮格入口網站（可擴充版）
+# 剛剛數位小教室｜v4.0.0（兩層入口）
 
-## 這一版已完成
+## 這版包含
 
-- 首頁 9 個大卡片、不同柔和粉彩底色，只有主題大標題與離線狀態。
-- 主題名稱已修正為「排氨」。
-- 點選後使用同一個 Safari 分頁進入教學工具，Safari「上一頁」返回；**不使用 iframe，也不額外增加頂部工具列**。
-- 所有卡片由 `apps.json` 產生；之後新增單元，**不必修改首頁 HTML 或 CSS**。
-- 首頁自己使用 Service Worker 快取，網站發佈後可在適當條件下離線開啟首頁。
-- 離線狀態不顯示假成功：目前 9 個工具仍在其他獨立 GitHub Pages 專案，會顯示「需連線」。
+- 第一層：9 個粉彩大按鈕（植物、酵素、循環、神經、血糖、排氨、生殖、遺傳、分類）。
+- 第二層：植物 3 個、循環 2 個、分類 4 個；其他主題直接進入原網站。
+- 使用本次提供的 **12 個正式 GitHub Pages 網址**，未使用 reurl.cc 短網址。
+- 不更動任何原有模擬器，不添加頂部導覽列，不縮小模擬器畫面。
+- Safari 上一頁：實際工具 → 第二層 → 第一層。原網站內部的分頁切換照舊。
+- 不需要修改首頁 HTML：新增單元、子單元或改連結，只要編輯 `apps.json`。
+- 首頁本身可使用 Service Worker 快取。各模擬器是否能離線，取決於它們**各自**的 Service Worker 與快取是否準備完整。
 
-## GitHub Pages 上線方式（新專案）
+## 上傳到既有 biology-hub 儲存庫（不用新建）
 
-1. GitHub 建立新的 **Public** repository，例如 `ganggang-classroom`。
-2. 使用 **Add file → Upload files**，將本 ZIP 解壓後的 `index.html`、`app.js`、`style.css`、`apps.json`、`sw.js` 上傳到專案根目錄。（README.md 可一起上傳。）
-3. 點擊 **Commit changes**。
-4. 進入 **Settings → Pages**，選擇 **Deploy from a branch**；Branch 選 `main`，Folder 選 `/(root)`，按 **Save**。
-5. 網址通常為 `https://pipipopo7410.github.io/ganggang-classroom/`（取決於實際專案名稱）；網站發佈完成後再打開。
+1. **保留原本 GitHub 專案**，不需要再建立新 Repository。
+2. 解壓縮 ZIP，將 `index.html`、`apps.json`、`hub-v4.js`、`hub-v4.css`、`taxonomy.html`、`sw.js`、`manifest.webmanifest`、`icon.svg` 上傳到原本 `biology-hub` 的根目錄。
+3. GitHub → `Add file` → `Upload files` → 拖曳以上檔案 → `Commit changes`。**同名檔案直接更新，別把 ZIP 整包上傳**。
+4. 等 GitHub Pages 更新後，重新整理入口網站；如仍顯示舊版，關閉 Safari 分頁後重新進入並再重新整理一次。
+5. 原本舊版 `app.js`、`style.css` 可以暫時保留，因為 v4 的 `index.html` 不再引用它們；等新版驗收後再清理。
 
-> 注意：上述九個工具網址是按照公開 repository 名稱推定的 GitHub Pages 路徑，沒有完成逐站連線驗證。如果個別按鈕打不開，請將正確網址改到 `apps.json`。
+## 分類的四階段入口（特別說明）
 
-## 以後新增單元：只改 apps.json
+`Taxonomy-Key/` 目前是單一網站內的四階段分頁，且尚未提供從外部 URL 指定預設階段的參數。因此 `taxonomy.html` 是一個**全畫面透明轉接頁**：
 
-在 `"apps"` 陣列最後一筆後面加上逗號，再貼入：
+- 載入原本 `Taxonomy-Key/` 網站。
+- 因入口和原網站都在 `https://pipipopo7410.github.io` 同一來源，透過程式選取原網站的指定階段。
+- 原網站本來就有的四個分頁按鈕完整保留，入口**不另外增加頂部導覽列**。
+- 這裡使用全視窗 iframe，未增加任何畫面高度；iPad Safari 仍需正式實機測試。
+- 若你之後願意讓分類網站原生支援 `?stage=2` 等網址參數，可以移除轉接頁，讓第二層直接連到分類網站。
+- 若直接在電腦用 `file://` 打開 HTML，分類轉接會回到原網站預設階段；**請以 GitHub Pages 正式網址測試四階段定位**。
 
-```json
-{
-  "id": "respiration",
-  "name": "呼吸",
-  "url": "https://pipipopo7410.github.io/你的新專案名稱/",
-  "offline": {"mode": "external"}
-}
-```
+## 新增單元
 
-`id` 不可與現有重複。頁面會自動多一張按鈕，粉彩色依序分配；在固定 3 欄排列下，相鄰不會重複同一色塊。修改後 GitHub Pages 會更新，不用動版面程式碼。
+只修改 `apps.json` 的 `topics` 陣列即可。
 
-## 離線狀態的真正意義
-
-- **需連線**：工具網址在平台外面，目前首頁無法替它保證離線執行。
-- **尚未預載**：已設定成本平台的本地模組，但這台 iPad 的快取檔案不完整。
-- **已快取・待驗證**：清單上的檔案已快取，但尚未完成斷網功能實測。
-- **離線可用**：本地模組的清單檔案都在快取內，且 `verified` 已在斷網功能實測後設為 `true`。
-
-注意：檔案清單和測試都要完整，iPad Safari 也可能因儲存空間管理清除快取。上課前應在每台 iPad 按「重新檢查」，並抽測關閉 Wi-Fi 的實際操作。
-
-### 將工具搬入本平台後的設定範例
-
-將某工具（假設為 `enzyme`）的 HTML、圖片、JS 與 CSS 全部放進本專案的 `modules/enzyme/`。排除或改成可離線使用的 CDN 外部依賴後，再把該工具的 `apps.json` 設為：
+### 新增一個沒有子分頁的主題
 
 ```json
-{
-  "id": "enzyme",
-  "name": "酵素",
-  "url": "./modules/enzyme/index.html",
-  "offline": {
-    "mode": "local",
-    "version": "v1",
-    "verified": false,
-    "files": [
-      "./modules/enzyme/index.html",
-      "./modules/enzyme/chart.umd.min.js",
-      "./modules/enzyme/style.css"
-    ]
-  }
-}
+{"id":"ecology","name":"生態","url":"https://pipipopo7410.github.io/Ecology-World/"}
 ```
 
-`files` 須列出工具運作必需的所有本機資源；**這只是格式範例，不代表目前已有這些檔案**。
+### 在「循環」第二層新增第 3 個網頁
 
-當 `apps.json` 設定了 `offline.mode = "local"`，首頁右上方會自動出現「預載工具」按鈕，可下載這些工具清單列出的本機資源；未經完整斷網實測，仍會顯示「已快取・待驗證」。目前的九個外部網站不能由此按鈕跨專案自動下載。
+找到 `"id":"circulation"`，在其 `"children"` 陣列最後新增：
 
-## 教室使用注意
+```json
+{"id":"circulation-extra","name":"微血管交換","url":"https://pipipopo7410.github.io/你新網站的網址/"}
+```
 
-- 首次部署，30 台 iPad 仍需要各自下載首頁及工具資源；建議分批處理。
-- 使用 Safari 的正常分頁模式，不建議先把網站安裝為「全螢幕主畫面 App」，因為你希望依靠 Safari 上一頁返回。
-- 目前僅首頁可快取；**九個外部工具尚未取得真正離線操作能力**。
-- 若直接在電腦雙擊 `index.html`，會出現 9 張預覽卡片；`apps.json` 的新增變更請在 GitHub Pages 網址測試。
+> 每個 `id` 必須唯一。相鄰按鈕使用不同粉彩色塊；新增超過 9 個主題會自動換行。
+
+## 離線狀態：為什麼目前可能顯示「尚未確認」？
+
+目前 12 個模擬器各自部署在獨立 GitHub Pages 專案。入口網站無法只靠連結，替它們保證離線運作。
+
+- **灰色：尚未確認** — 沒偵測到該單元必要的快取與 Service Worker，或尚未在本機檢查成功。
+- **橘色：已快取・待測試** — 偵測到 Service Worker 與指定入口頁的快取，但還沒完成斷網功能驗收。
+- **綠色：已驗證** — 教師在這台 iPad 上斷網測試後手動確認，且檢查時仍偵測到必要入口快取。
+
+首頁右上角的狀態按鈕可查看各子單元的狀態與手動驗證。**綠色也不能保證永遠可用**：iPad 可能清理快取、模擬器版本可能更新，因此仍建議上課前抽測。
+
+**不會**用 `navigator.onLine` 或 Wi-Fi 圖示冒充「離線可用」。
+
+## 使用建議
+
+- 先在一台學校 iPad 測試：植物三頁、循環兩頁、分類四階段。
+- 特別測試：點分類「第三階段」是否直接顯示該階段，且上方四個原始分頁都還在。
+- 測試 Safari 返回：第三層回第二層，第二層回第一層。
+- 對原網站已支援 PWA 的單元，先連線打開一次、等待資源下載，接著關閉 Wi-Fi 驗收。
+- 目前此 ZIP **沒有將全部 12 個模擬器搬入入口網站**，所以不應宣稱已解決全班 30 台的流量問題；這是後續獨立的離線優化工作。
