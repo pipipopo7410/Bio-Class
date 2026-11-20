@@ -1,0 +1,1 @@
+v5.4：移除海龜，保留蝴蝶；首頁及子選單固定滿版、禁止捲動；Service Worker 改為連線優先並保留離線備援；新增網站更新提示。離線教材快取不主動清除。請以 GitHub Desktop 覆蓋檔案並 Commit/Push。注意原儲存庫若已有舊的 brand-turtle.png，留著不影響畫面。

@@ -1,14 +1,14 @@
 'use strict';
 // Scope: this portal only (Bio-Class). Mirrored modules are placed under ./apps/<id>/.
 // Never intercept the other original GitHub Pages repositories directly.
-const SHELL='gg-room-shell-v5.2.2';
+const SHELL='gg-room-shell-v5.4.0';
 const META='gg-room-offline-meta-v1';
 const CACHE_PREFIX='gg-module-v1-';
 const ROOT=new URL('./',self.location.href);
 const STATE_URL=new URL('./__gg_offline_state__',ROOT).href;
 const CORE=['./','./index.html','./style.css','./app.js','./apps.json','./taxonomy.html',
   './manifest.webmanifest','./offline.html','./offline.css','./offline.js',
-  './offline-catalog.json','./assets/brand-butterfly.png','./assets/brand-turtle.png','./assets/app-icon-180.png','./assets/app-icon-192.png','./assets/app-icon-512.png'];
+  './offline-catalog.json','./assets/brand-butterfly.png','./assets/app-icon-180.png','./assets/app-icon-192.png','./assets/app-icon-512.png'];
 const coreURLs=new Set(CORE.map(p=>new URL(p,ROOT).href));
 self.addEventListener('install',e=>e.waitUntil((async()=>{
  const cache=await caches.open(SHELL);
@@ -60,6 +60,19 @@ self.addEventListener('fetch',event=>{
  }
  const core=new URL(req.url);core.search='';
  if(coreURLs.has(core.href)){
-  event.respondWith(caches.open(SHELL).then(cache=>cache.match(core.href)).then(hit=>hit||fetch(req)));
+  event.respondWith((async()=>{
+   const cache=await caches.open(SHELL);
+   try{
+    const fresh=await fetch(req,{cache:'no-store'});
+    if(fresh.ok)await cache.put(core.href,fresh.clone());
+    return fresh;
+   }catch{
+    const saved=await cache.match(core.href);
+    if(saved)return saved;
+    return Response.error();
+   }
+  })());
  }
 });
+
+self.addEventListener('message',e=>{if(e.data?.type==='SKIP_WAITING')self.skipWaiting();});

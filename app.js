@@ -84,3 +84,38 @@ dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
     navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('首頁快取未啟用',err));
   }
 })();
+
+// v5.4: Check for new shell versions on reconnect/foreground. Never delete module caches.
+(function setupPortalUpdates(){
+ if(location.protocol!=='https:'||!('serviceWorker' in navigator))return;
+ const banner=document.getElementById('update-banner');
+ const now=document.getElementById('update-now');
+ const dismiss=document.getElementById('update-dismiss');
+ let reloading=false,hasPrompted=false;
+ function show(){if(!hasPrompted){hasPrompted=true;banner.hidden=false;}}
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{
+   if(reloading)return;
+   // Only reload automatically after the user chose to update; never interrupt classwork.
+   if(sessionStorage.getItem('gg-update-accepted')==='1'){
+     reloading=true;sessionStorage.removeItem('gg-update-accepted');location.reload();
+   }else show();
+ });
+ now.addEventListener('click',async()=>{
+   banner.hidden=true;
+   sessionStorage.setItem('gg-update-accepted','1');
+   try{
+    const reg=await navigator.serviceWorker.getRegistration();
+    if(reg?.waiting){reg.waiting.postMessage({type:'SKIP_WAITING'});}
+    else location.reload();
+   }catch{location.reload();}
+ });
+ dismiss.addEventListener('click',()=>{banner.hidden=true;});
+ async function check(){
+   if(!navigator.onLine)return;
+   try{const reg=await navigator.serviceWorker.getRegistration();if(reg)await reg.update();}
+   catch(err){console.warn('更新檢查稍後重試',err);}
+ }
+ window.addEventListener('online',check);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)check();});
+ window.addEventListener('load',()=>setTimeout(check,1200),{once:true});
+})();
