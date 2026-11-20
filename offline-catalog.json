@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "buildReady": false,
+  "siteVersion": "5.1.0",
+  "generatedAt": null,
+  "modules": [],
+  "note": "尚未經 GitHub Actions 整合公開教材。請將 Pages 設定為 GitHub Actions，再執行 Build offline classroom。"
+}

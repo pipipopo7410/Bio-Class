@@ -1,20 +1,27 @@
-# 剛剛の數位小教室 v5.2
+# 剛剛の數位小教室 v5.2.1｜修正版（含 v5.1 完整離線系統）
 
-這是可直接上傳到 `biology-hub` GitHub 儲存庫的完整版本。
+## 為什麼需要修正版？
+前一份 v5.2 更新包漏了 `.github/workflows/`、`scripts/`、`offline.js` 等離線系統檔案。這份已從 v5.1 的完整工程重新整合，**沒有用暫存頁取代真正的下載管理器**。
 
-## 本版重點
-- 標題改為：**剛剛の數位小教室**（の 為小小歪歪效果）
-- 整合兩個品牌 Logo（黑色剛字標誌＋烏龜 Logo）
-- 保留已定稿 App Icon
-- 九個主題大按鈕與第二層選單維持可用
-- 提供安裝教學對話框
-- 提供基礎 PWA 與首頁快取
+## 本次修正
+- 標題：`剛剛の數位小教室`，其中 `の` 小字微傾斜。
+- 正式 App Icon + 鳳蝶／海龜兩個品牌 Logo。
+- 保留九個主題、全部 12 個正式連結、原本分頁、下載與更新管理。
+- Service Worker 主頁快取更新至 `gg-room-shell-v5.2.1`，保留教材模組快取。
+- 新增 `refresh.html`，有助排除舊首頁快取。
 
-## 上傳方式
-1. 打開 `biology-hub` 儲存庫。
-2. 選擇 **Add file → Upload files**。
-3. 把本資料夾內所有檔案與 `assets/` 資料夾一起上傳。
-4. 按 **Commit changes**。
+## 重要：部署前檢查
+1. 在 GitHub repo `biology-hub` 備份舊版。
+2. 將 ZIP 解壓縮，**包含隱藏 `.github/workflows` 與 `scripts` 資料夾**一起上傳到主分支 `main` 根目錄。
+3. 確認 `Settings → Pages → Build and deployment → Source` 設定為 `GitHub Actions`。
+4. 在 `Actions → Build offline classroom` 確認最新執行為綠色成功；若沒有觸發，按 `Run workflow` 手動執行。
+5. 先開 `https://pipipopo7410.github.io/biology-hub/refresh.html`，點「更新入口網站畫面」，再回首頁確認新標題、兩個 Logo。
+6. 不要直接在 30 台 iPad 全部下載；先用一台 iPad 完成離線驗收。
 
-## 這一版尚未直接改動 12 個教學網站
-若未來要做到完整離線教材與各站懸浮返回首頁，仍需逐站處理或用自動整合腳本處理。
+## 如果 refresh.html 顯示 404
+這表示新頁面尚未成功發布，不是單純快取問題；先檢查 Actions 是否成功與 Pages Source 是否設對。
+
+## 注意
+- `build-offline.yml` 仍須從 12 個原專案複製檔案，若建置失敗，GitHub Pages 會保留之前的成功版本。
+- 不保證 12 個教材已離線可用：需實測外部 CDN、圖片、模型、分頁、3D 等資源。
+- `refresh.html` **只刪除入口網站舊版外殼快取**，不會主動刪除 `gg-module-v1-*` 或離線進度；但 iPad 系統仍可能自行清除儲存資料。
