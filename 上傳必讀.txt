@@ -1,0 +1,23 @@
+剛剛の數位小教室｜Bio-Class 完整網站 v5.2.3
+
+本包已包含：
+- 首頁、九個主題入口、第二層選單
+- 蝴蝶及海龜 Logo、App 圖示
+- 離線下載介面與 Service Worker
+- .github/workflows/build-offline.yml
+- scripts/build_offline.py
+- scripts/sources.json
+
+重要：GitHub 網頁不能直接把 ZIP 當網站部署。
+建議使用 GitHub Desktop：
+1. 安裝並開啟 GitHub Desktop，登入 GitHub。
+2. File > Clone repository > pipipopo7410/Bio-Class。
+3. Repository > Show in Explorer，打開本機 Bio-Class 資料夾。
+4. 解壓縮此 ZIP，把『裡面的全部檔案和資料夾』複製到 Bio-Class 資料夾根目錄，選擇覆蓋同名檔案。
+5. 回 GitHub Desktop，填寫 Summary（例如 v5.2.3 完整更新），按 Commit to main。
+6. 按 Push origin。
+7. GitHub > Actions 確認 Build offline classroom 的執行結果。
+
+本包確認缺少的 scripts/build_offline.py 已包含。
+但真正 12 個網站是否全部整合成功，仍需 GitHub Actions 執行後才能確定。
+請勿把 ZIP 本身直接放到 GitHub 的檔案列表。

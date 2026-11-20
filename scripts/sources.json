@@ -1,0 +1,17 @@
+{
+  "owner": "pipipopo7410",
+  "modules": [
+    {"id":"plant-classification","repo":"Plant-Classification","name":"植物分類"},
+    {"id":"plant-physiology","repo":"Plant-2-Physiology","name":"運輸與光合"},
+    {"id":"plant-reproduction","repo":"Plant-Reproduction","name":"植物生殖與遺傳"},
+    {"id":"enzyme","repo":"Enzyme-PhET","name":"酵素"},
+    {"id":"circulation-2d","repo":"Circulation-2D","name":"2D 血液循環"},
+    {"id":"circulation-3d","repo":"-Circulation-3D","name":"3D 血液循環"},
+    {"id":"nervous","repo":"Nervous-WordCards","name":"神經"},
+    {"id":"glucose","repo":"Glucose-WordCards","name":"血糖"},
+    {"id":"ammonia","repo":"Ammonia-WordCards","name":"排氨"},
+    {"id":"reproduction","repo":"Chromosome-Counting","name":"生殖"},
+    {"id":"genetics","repo":"Genetics-Monsters","name":"遺傳"},
+    {"id":"taxonomy","repo":"Taxonomy-Key","name":"分類四階段"}
+  ]
+}
