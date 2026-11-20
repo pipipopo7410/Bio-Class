@@ -1,7 +1,7 @@
 'use strict';
-// Scope: biology-hub only. Mirrored modules are placed under ./apps/<id>/.
+// Scope: this portal only (Bio-Class). Mirrored modules are placed under ./apps/<id>/.
 // Never intercept the other original GitHub Pages repositories directly.
-const SHELL='gg-room-shell-v5.2.1';
+const SHELL='gg-room-shell-v5.2.2';
 const META='gg-room-offline-meta-v1';
 const CACHE_PREFIX='gg-module-v1-';
 const ROOT=new URL('./',self.location.href);
@@ -17,7 +17,7 @@ self.addEventListener('install',e=>e.waitUntil((async()=>{
 })()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{
  const keys=await caches.keys();
- await Promise.all(keys.filter(k=>k.startsWith('gg-room-shell-')&&k!==SHELL).map(k=>caches.delete(k)));
+ await Promise.all(keys.filter(k=>(k.startsWith('gg-room-shell-')&&k!==SHELL)||k.startsWith('gg-classroom-v')).map(k=>caches.delete(k)));
  await self.clients.claim();
 })()));
 async function activeVersion(id){
@@ -60,6 +60,6 @@ self.addEventListener('fetch',event=>{
  }
  const core=new URL(req.url);core.search='';
  if(coreURLs.has(core.href)){
-  event.respondWith(caches.match(core.href).then(hit=>hit||fetch(req)));
+  event.respondWith(caches.open(SHELL).then(cache=>cache.match(core.href)).then(hit=>hit||fetch(req)));
  }
 });

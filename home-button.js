@@ -3,7 +3,7 @@
   'use strict';
   if(document.getElementById('gang-home-button-host'))return;
   const myScript=document.currentScript;
-  let target='https://pipipopo7410.github.io/biology-hub/';
+  let target='https://pipipopo7410.github.io/Bio-Class/';
   if(myScript?.dataset?.hubUrl){try{const u=new URL(myScript.dataset.hubUrl,location.href);if(u.protocol==='https:')target=u.href;}catch{}}
   const host=document.createElement('div');host.id='gang-home-button-host';
   host.style.cssText='position:fixed;right:calc(12px + env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483640;width:46px;height:46px;touch-action:none;';

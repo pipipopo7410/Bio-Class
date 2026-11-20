@@ -1,27 +1,33 @@
-# 剛剛の數位小教室 v5.2.1｜修正版（含 v5.1 完整離線系統）
+# 剛剛の數位小教室｜Bio-Class v5.2.2 修復包
 
-## 為什麼需要修正版？
-前一份 v5.2 更新包漏了 `.github/workflows/`、`scripts/`、`offline.js` 等離線系統檔案。這份已從 v5.1 的完整工程重新整合，**沒有用暫存頁取代真正的下載管理器**。
+這份檔案是專門對應你的實際 GitHub 儲存庫：`pipipopo7410/Bio-Class`。
 
-## 本次修正
-- 標題：`剛剛の數位小教室`，其中 `の` 小字微傾斜。
-- 正式 App Icon + 鳳蝶／海龜兩個品牌 Logo。
-- 保留九個主題、全部 12 個正式連結、原本分頁、下載與更新管理。
-- Service Worker 主頁快取更新至 `gg-room-shell-v5.2.1`，保留教材模組快取。
-- 新增 `refresh.html`，有助排除舊首頁快取。
+## 這次修正
 
-## 重要：部署前檢查
-1. 在 GitHub repo `biology-hub` 備份舊版。
-2. 將 ZIP 解壓縮，**包含隱藏 `.github/workflows` 與 `scripts` 資料夾**一起上傳到主分支 `main` 根目錄。
-3. 確認 `Settings → Pages → Build and deployment → Source` 設定為 `GitHub Actions`。
-4. 在 `Actions → Build offline classroom` 確認最新執行為綠色成功；若沒有觸發，按 `Run workflow` 手動執行。
-5. 先開 `https://pipipopo7410.github.io/biology-hub/refresh.html`，點「更新入口網站畫面」，再回首頁確認新標題、兩個 Logo。
-6. 不要直接在 30 台 iPad 全部下載；先用一台 iPad 完成離線驗收。
+- 保留你定稿的首頁、9 主題、12 網站連結、蝴蝶與海龜 Logo、App Icon。
+- `refresh.html` 會依目前網址判斷網站作用範圍，不再硬寫 `/biology-hub/`。
+- `sw.js` 只讀取本版入口網站快取，避免誤讀其他舊版快取；舊的入口網站快取會清除，但**不會主動刪除 `gg-module-v1-*` 已下載教材快取與 `gg-room-offline-meta-v1`**。
+- `scripts/build_offline.py` 自動使用現在儲存庫名稱，且本機預設為 `Bio-Class`。
+- `home-button.js` 中示範的返回首頁目標改為 `Bio-Class`。
 
-## 如果 refresh.html 顯示 404
-這表示新頁面尚未成功發布，不是單純快取問題；先檢查 Actions 是否成功與 Pages Source 是否設對。
+## 上傳（重要）
 
-## 注意
-- `build-offline.yml` 仍須從 12 個原專案複製檔案，若建置失敗，GitHub Pages 會保留之前的成功版本。
-- 不保證 12 個教材已離線可用：需實測外部 CDN、圖片、模型、分頁、3D 等資源。
-- `refresh.html` **只刪除入口網站舊版外殼快取**，不會主動刪除 `gg-module-v1-*` 或離線進度；但 iPad 系統仍可能自行清除儲存資料。
+1. 前往 `https://github.com/pipipopo7410/Bio-Class`，先備份現有版本。
+2. 解壓縮本 ZIP，**上傳其中的檔案與資料夾，不是 ZIP 本身**。所有檔案都要放在儲存庫根目錄。
+3. 尤其確認以下三個資料夾存在：
+   - `.github/workflows/build-offline.yml`（隱藏資料夾，容易漏傳）
+   - `scripts/build_offline.py` 與 `scripts/sources.json`
+   - `assets/` 中的圖片與圖示
+4. GitHub → Actions，理應看到 `Build offline classroom` 工作流程。手動執行一次，確認兩個工作 Job 都綠色。
+5. 開啟 `https://pipipopo7410.github.io/Bio-Class/refresh.html`，點更新按鈕。
+6. 再開 `https://pipipopo7410.github.io/Bio-Class/`，檢查新版標題、Logo。
+
+## 先做無痕測試，排除網站網址不一致
+
+開新無痕視窗，直接輸入 `https://pipipopo7410.github.io/Bio-Class/`。如果這裡顯示新版，但你原本瀏覽器畫面是舊版，應優先用 refresh.html 處理快取。
+
+## 安全提醒
+
+- 完整離線操作尚未經過全部 12 個教材的 iPad 斷網驗收。
+- 不要使用「清除所有網站資料」當作第一步，因為可能清掉其他網頁的學習紀錄和已下載教材。
+- 如 GitHub Actions 顯示紅色叉叉，停止反覆上傳，改看 Actions 的錯誤訊息。
