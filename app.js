@@ -1,6 +1,6 @@
 'use strict';
 // v5：只有入口視覺、導覽與安裝說明。不要將「加入主畫面」誤認為所有教學網頁均可離線。
-const palette=['#FBE5E9','#FCEBD9','#F0E3F7','#E1F0E9','#E5EAFB','#F9E3EF','#FFF0D9','#E6E2F5','#DFF2F1'];
+const palette=['#FBE5E9','#FCEBD9','#E7E3F5','#E1F0E9','#E5EAFB','#F9E3EF','#FFF0D9','#E6F0E9','#DFF2F1'];
 const $=id=>document.getElementById(id);
 const grid=$('grid'),section=$('section-bar'),sectionName=$('section-name');
 const dialog=$('install-dialog');

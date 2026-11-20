@@ -1,0 +1,1 @@
+剛剛の數位小教室 v5.3：海龜在標題右側，蝴蝶在九宮格右下角。首頁不顯示 App Icon，但安裝圖示仍保留。原有離線程式、GitHub Actions 與 scripts 均保留。請將解壓縮後所有檔案（包括 .github、scripts、assets）複製到 GitHub Desktop 的 Bio-Class 儲存庫根目錄，再 Commit 與 Push。

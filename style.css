@@ -31,3 +31,38 @@ h1{font-weight:800;font-size:clamp(24px,3.3vw,39px);line-height:1.2;letter-spaci
 @media(orientation:landscape) and (max-height:700px){.brand-logo{width:42px;height:42px;border-radius:12px}.brand-row h1{font-size:clamp(21px,2.8vw,31px)}}
 @media(max-width:780px){.brand-logos{gap:5px}.brand-logo{width:39px;height:39px}.brand-row h1{font-size:clamp(19px,3.5vw,30px)}}
 @media(max-width:650px){.brand-row{flex-wrap:wrap}.brand-logos{margin-left:1px}}
+
+/* v5.3: airy, large transparent animal silhouettes outside the tile content. */
+.shell{position:relative;isolation:isolate}
+.header{position:relative;z-index:2}
+.identity{gap:0}.app-mark,.brand-logos{display:none!important}
+.brand-row h1{font-size:clamp(25px,3.25vw,40px);letter-spacing:.025em}
+.kana-no{font-size:.55em;vertical-align:.2em;margin:0 .25em;transform:rotate(-24deg) translateY(-2px);color:#b878a0}
+.grid-stage{position:relative;flex:1;display:flex;min-height:0}
+.grid-stage .grid{width:100%;position:relative;z-index:1}
+.floating-brand{position:absolute;z-index:2;object-fit:contain;pointer-events:none;user-select:none;filter:drop-shadow(0 5px 4px rgba(41,39,54,.05))}
+.floating-butterfly{width:clamp(108px,12vw,166px);height:auto;top:-65px;right:clamp(48px,11vw,145px);transform:rotate(-16deg);opacity:.87}
+.floating-turtle{width:clamp(130px,14vw,196px);height:auto;bottom:-33px;right:-34px;transform:rotate(11deg);opacity:.85}
+/* Keep art from obscuring tap targets: reserve a narrow clear edge at the top/bottom. */
+.grid-stage .grid:not(.children){padding-top:36px;padding-bottom:23px}
+.grid-stage:has(.grid.children) .floating-brand{display:none}
+@media(orientation:landscape) and (max-height:700px){
+ .floating-butterfly{width:110px;top:-39px;right:85px}
+ .floating-turtle{width:125px;bottom:-16px;right:-12px}
+ .grid-stage .grid:not(.children){padding-top:20px;padding-bottom:10px}
+}
+@media(max-width:650px){.floating-butterfly{width:85px;top:-35px;right:35px}.floating-turtle{width:95px;right:-8px;bottom:-15px}.grid-stage .grid:not(.children){padding-top:26px}}
+
+/* v5.3 final: turtle beside the title, butterfly at the bottom-right grid corner. */
+.header{overflow:visible}
+.brand-row{position:relative;gap:clamp(8px,1.3vw,18px);overflow:visible}
+.header-turtle{display:block;width:clamp(62px,7.4vw,112px);height:clamp(60px,7.3vw,105px);object-fit:contain;flex-shrink:0;align-self:center;transform:rotate(-8deg);pointer-events:none;user-select:none}
+.grid-stage .floating-butterfly{width:clamp(105px,11vw,168px);top:auto;right:clamp(-22px,-1vw,-8px);bottom:clamp(-25px,-1.7vw,-10px);transform:rotate(-12deg);opacity:1}
+.grid-stage .grid:not(.children){padding-top:0;padding-bottom:0}
+@media(orientation:landscape) and (max-height:700px){
+ .header-turtle{width:clamp(60px,7vw,88px);height:clamp(54px,7vw,80px)}
+ .grid-stage .floating-butterfly{width:clamp(92px,10vw,125px);bottom:-12px;right:-9px}
+ .grid-stage .grid:not(.children){padding-top:0;padding-bottom:0}
+}
+@media(max-width:800px){.brand-row h1{font-size:clamp(19px,3.1vw,30px)}.header-turtle{width:clamp(44px,7vw,72px);height:clamp(44px,7vw,72px)}}
+@media(max-width:650px){.header-turtle{width:44px;height:44px}.grid-stage .floating-butterfly{width:88px;bottom:-10px;right:-7px}}
