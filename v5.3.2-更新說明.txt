@@ -1,0 +1,14 @@
+剛剛の數位小教室 v5.3.2（從 v5.3.1 已驗收的 11 按鈕正式版局部修改）
+
+首頁 11 個按鈕與原有兩個外部教學連結完全保留。
+神經第二層：字卡（原 Nervous-WordCards）、3D（新 Nervous-3D）。
+循環第二層：2D（原 Circulation-2D）、3D（新版 Circulation-3D，移除網址中多餘的 -）。
+因舊版循環 3D 有不同的離線版本，新的 3D 使用新的識別碼，避免開啟舊快取。
+兩個新 3D 教材納入「待驗收的離線候選清單」；大於 180MB 的單元會略過離線鏡像，不阻擋其他教材發布。3D 功能的實際離線可用性須使用 iPad 斷網驗證。
+GitHub Actions 產出的這兩個 3D 教材鏡像會自動載入返回首頁懸浮按鈕。
+
+重要：獨立的 Nervous-3D 和 Circulation-3D 原站，不會被 Bio-Class 儲存庫直接修改。
+若要在連網開啟原站時也有按鈕，須分別到兩個獨立 GitHub 儲存庫上傳 home-button.js，並在它們的 index.html 的 </body> 前加入：
+<script src="./home-button.js"></script>
+
+注意：只有程式與測試完成；GitHub 雲端建置實際下載兩個來源後，仍須檢查 Actions 與 iPad。

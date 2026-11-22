@@ -67,19 +67,50 @@ h1{font-weight:800;font-size:clamp(24px,3.3vw,39px);line-height:1.2;letter-spaci
 @media(max-width:800px){.brand-row h1{font-size:clamp(19px,3.1vw,30px)}.header-turtle{width:clamp(44px,7vw,72px);height:clamp(44px,7vw,72px)}}
 @media(max-width:650px){.header-turtle{width:44px;height:44px}.grid-stage .floating-butterfly{width:88px;bottom:-10px;right:-7px}}
 
-/* v5.4: fixed, non-scrolling portal viewport (including iPad landscape). */
-html,body{width:100%;height:100%;overflow:hidden;overscroll-behavior:none}
-.shell{width:100%;height:100vh;height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;gap:clamp(6px,1.3vh,14px);padding:clamp(8px,1.5vh,16px) clamp(10px,1.6vw,22px);padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}
-.header{flex:0 0 auto;min-height:0;gap:8px}.brand-row{min-width:0}.brand-row h1{font-size:clamp(18px,3vw,36px);max-width:100%;white-space:nowrap}.header-actions{flex-shrink:0}
-.header-turtle,.floating-turtle{display:none!important}
-.grid-stage{flex:1 1 0;min-height:0;overflow:visible}.grid-stage .grid{height:100%;min-height:0;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);align-content:stretch;gap:clamp(6px,1.4vh,15px)}
-.grid-stage .grid.children{grid-template-rows:repeat(3,minmax(0,1fr));align-content:start;flex:1}
-.grid .tile,.grid.children .tile{min-width:0;min-height:0;height:100%;padding:clamp(4px,1vh,12px);border-radius:clamp(12px,1.7vw,23px)}
-.grid .tile span{font-size:clamp(18px,min(3vw,4.2vh),38px);overflow-wrap:anywhere}
-.grid.children .tile span{font-size:clamp(17px,min(2.8vw,4vh),34px)}
-.grid-stage .floating-butterfly{width:clamp(68px,10vw,130px);right:0;bottom:0;max-height:38%;object-fit:contain}
-.section-bar{flex:0 0 auto;min-height:0;height:clamp(32px,6vh,45px)}
-.update-banner[hidden]{display:none}.update-banner{position:fixed;z-index:50;top:max(8px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;white-space:nowrap;padding:8px 10px 8px 16px;border:1px solid #d9cce5;border-radius:16px;background:#fff;box-shadow:0 8px 30px #40324a35;font-size:14px;font-weight:700}
-.update-banner button{border:0;border-radius:10px;min-height:36px;padding:6px 12px;background:#eadcf4;color:#443252;font-weight:750;cursor:pointer}.update-banner #update-dismiss{background:transparent;font-size:22px;padding:2px 8px}
-@media(max-width:650px){.shell{gap:6px}.header{flex-wrap:nowrap}.header-actions{margin-left:0}.install-button{padding:6px 9px;min-height:36px;font-size:12px}.install-button svg{width:16px}.offline-entry{min-width:34px;min-height:34px}.brand-row h1{font-size:clamp(15px,3.4vw,23px)}.grid-stage .grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr))}.grid .tile span{font-size:clamp(16px,3.4vw,25px)}.grid-stage .floating-butterfly{width:clamp(60px,12vw,95px)}}
-@media(orientation:landscape) and (max-height:540px){.shell{gap:5px;padding-top:5px;padding-bottom:5px}.header{height:42px}.brand-row h1{font-size:clamp(18px,2.6vw,30px)}.grid .tile span{font-size:clamp(17px,3.6vh,28px)}.grid-stage .floating-butterfly{width:clamp(60px,8vw,95px)}}
+
+/* v5.3.1 -- additive external cards; preserve the nine original pastel tiles. */
+/* Keep the homepage fitted within one screen, including on landscape iPads. */
+html,body{height:100%;width:100%;overflow:hidden;overscroll-behavior:none}
+.shell{height:100dvh;min-height:0;overflow:hidden}
+.grid-stage{min-height:0;overflow:visible}
+.grid-stage .grid:not(.children){
+  flex:1;min-height:0;height:100%;align-content:stretch;
+  grid-template-columns:repeat(var(--home-cols,3),minmax(0,1fr));
+  grid-template-rows:repeat(var(--home-rows,4),minmax(0,1fr));
+  grid-auto-rows:minmax(0,1fr);
+}
+.grid-stage .grid:not(.children)>.tile{min-height:0;min-width:0;padding:clamp(5px,1.3vh,12px)}
+.grid-stage .grid:not(.children)>.tile span{font-size:clamp(20px,min(3vw,4.1vh),38px)}
+/* External sites: gentle mist-white and pale-gray cards, deliberately no topic palette. */
+.grid-stage .grid .tile-external{
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(4px,.7vh,9px);
+  color:#465065!important;
+  background:linear-gradient(145deg,#f9f9fb 0%,#f1f2f5 57%,#e9ecf1 100%)!important;
+  border:1px solid rgba(215,220,228,.92);
+  box-shadow:0 5px 12px rgba(76,88,103,.06);
+  text-align:center;
+}
+.grid-stage .grid .tile-external .external-label{
+  display:inline-block;border:1px solid #d9dde5;background:rgba(255,255,255,.64);
+  border-radius:999px;padding:2px 9px;
+  color:#687287;font-size:clamp(10px,1.05vw,12px);
+  line-height:1.4;font-weight:700;letter-spacing:.07em;
+}
+.grid-stage .grid .tile-external .external-credit{
+  color:#7c8390;font-size:clamp(10px,1.08vw,12px);line-height:1.3;font-weight:500;
+  letter-spacing:0;
+}
+.grid-stage .grid.children .tile{min-width:0}
+@media(orientation:landscape) and (max-height:570px){
+  .shell{gap:7px;padding:7px 12px}
+  .header{min-height:40px}
+  .brand-row h1{font-size:clamp(18px,2.8vw,27px)}
+  .grid-stage .grid:not(.children){gap:clamp(6px,1vw,12px)}
+  .grid-stage .grid:not(.children)>.tile span{font-size:clamp(17px,2.55vw,27px)}
+}
+@media(max-width:650px){
+  .grid-stage .grid:not(.children){gap:clamp(5px,1.6vw,10px)}
+  .grid-stage .grid:not(.children)>.tile span{font-size:clamp(18px,4vw,27px)}
+  .grid-stage .grid .tile-external{gap:3px}
+  .grid-stage .grid .tile-external .external-credit{font-size:10px}
+}

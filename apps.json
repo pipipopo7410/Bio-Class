@@ -1,5 +1,5 @@
 {
-  "version": "5.1.0",
+  "version": "5.3.2",
   "title": "剛剛の數位小教室",
   "topics": [
     {
@@ -38,16 +38,27 @@
           "url": "https://pipipopo7410.github.io/Circulation-2D/"
         },
         {
-          "id": "circulation-3d",
+          "id": "circulation-3d-new",
           "name": "3D 血液循環",
-          "url": "https://pipipopo7410.github.io/-Circulation-3D/"
+          "url": "https://pipipopo7410.github.io/Circulation-3D/"
         }
       ]
     },
     {
-      "id": "nervous",
+      "id": "nervous-topic",
       "name": "神經",
-      "url": "https://pipipopo7410.github.io/Nervous-WordCards/"
+      "children": [
+        {
+          "id": "nervous",
+          "name": "字卡",
+          "url": "https://pipipopo7410.github.io/Nervous-WordCards/"
+        },
+        {
+          "id": "nervous-3d",
+          "name": "3D",
+          "url": "https://pipipopo7410.github.io/Nervous-3D/"
+        }
+      ]
     },
     {
       "id": "glucose",
@@ -122,6 +133,22 @@
           ]
         }
       ]
+    },
+    {
+      "id": "external-human-atlas",
+      "name": "3D 人體",
+      "url": "https://human-atlas-2s7.pages.dev/",
+      "external": true,
+      "credit": "undergravity",
+      "repo": "https://github.com/undergravity/human-atlas"
+    },
+    {
+      "id": "external-bioscape",
+      "name": "3D 細胞",
+      "url": "https://sldyns.github.io/bioscape/#/",
+      "external": true,
+      "credit": "Kun Qian（錢坤）",
+      "repo": "https://github.com/sldyns/bioscape"
     }
   ]
 }

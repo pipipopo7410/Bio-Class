@@ -7,7 +7,7 @@ const dialog=$('install-dialog');
 let catalog=[];
 let cachedModules=new Set();
 const SITE_ROOT=new URL('./',location.href);
-const fallbackData={"version":"5.0.0","title":"剛剛の數位小教室","topics":[{"id":"plant","name":"植物","children":[{"id":"plant-classification","name":"分類","url":"https://pipipopo7410.github.io/Plant-Classification/"},{"id":"plant-physiology","name":"運輸與光合","url":"https://pipipopo7410.github.io/Plant-2-Physiology/"},{"id":"plant-reproduction","name":"生殖與遺傳","url":"https://pipipopo7410.github.io/Plant-Reproduction/"}]},{"id":"enzyme","name":"酵素","url":"https://pipipopo7410.github.io/Enzyme-PhET/"},{"id":"circulation","name":"循環","children":[{"id":"circulation-2d","name":"2D 血液循環","url":"https://pipipopo7410.github.io/Circulation-2D/"},{"id":"circulation-3d","name":"3D 血液循環","url":"https://pipipopo7410.github.io/-Circulation-3D/"}]},{"id":"nervous","name":"神經","url":"https://pipipopo7410.github.io/Nervous-WordCards/"},{"id":"glucose","name":"血糖","url":"https://pipipopo7410.github.io/Glucose-WordCards/"},{"id":"ammonia","name":"排氨","url":"https://pipipopo7410.github.io/Ammonia-WordCards/"},{"id":"reproduction","name":"生殖","url":"https://pipipopo7410.github.io/Chromosome-Counting/"},{"id":"genetics","name":"遺傳","url":"https://pipipopo7410.github.io/Genetics-Monsters/"},{"id":"taxonomy","name":"分類","children":[{"id":"taxonomy-1","name":"整體複習","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":1},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage1.html"]},{"id":"taxonomy-2","name":"單一生物特徵","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":2},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage2.html"]},{"id":"taxonomy-3","name":"分類判斷","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":3},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage3.html"]},{"id":"taxonomy-4","name":"檢索表練習","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":4},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage4.html"]}]}]};
+const fallbackData={"version":"5.3.2","title":"剛剛の數位小教室","topics":[{"id":"plant","name":"植物","children":[{"id":"plant-classification","name":"分類","url":"https://pipipopo7410.github.io/Plant-Classification/"},{"id":"plant-physiology","name":"運輸與光合","url":"https://pipipopo7410.github.io/Plant-2-Physiology/"},{"id":"plant-reproduction","name":"生殖與遺傳","url":"https://pipipopo7410.github.io/Plant-Reproduction/"}]},{"id":"enzyme","name":"酵素","url":"https://pipipopo7410.github.io/Enzyme-PhET/"},{"id":"circulation","name":"循環","children":[{"id":"circulation-2d","name":"2D 血液循環","url":"https://pipipopo7410.github.io/Circulation-2D/"},{"id":"circulation-3d-new","name":"3D 血液循環","url":"https://pipipopo7410.github.io/Circulation-3D/"}]},{"id":"nervous-topic","name":"神經","children":[{"id":"nervous","name":"字卡","url":"https://pipipopo7410.github.io/Nervous-WordCards/"},{"id":"nervous-3d","name":"3D","url":"https://pipipopo7410.github.io/Nervous-3D/"}]},{"id":"glucose","name":"血糖","url":"https://pipipopo7410.github.io/Glucose-WordCards/"},{"id":"ammonia","name":"排氨","url":"https://pipipopo7410.github.io/Ammonia-WordCards/"},{"id":"reproduction","name":"生殖","url":"https://pipipopo7410.github.io/Chromosome-Counting/"},{"id":"genetics","name":"遺傳","url":"https://pipipopo7410.github.io/Genetics-Monsters/"},{"id":"taxonomy","name":"分類","children":[{"id":"taxonomy-1","name":"整體複習","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":1},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage1.html"]},{"id":"taxonomy-2","name":"單一生物特徵","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":2},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage2.html"]},{"id":"taxonomy-3","name":"分類判斷","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":3},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage3.html"]},{"id":"taxonomy-4","name":"檢索表練習","url":"https://pipipopo7410.github.io/Taxonomy-Key/","entry":{"type":"taxonomy","stage":4},"checkFiles":["https://pipipopo7410.github.io/Taxonomy-Key/stage4.html"]}]},{"id":"external-human-atlas","name":"3D 人體","url":"https://human-atlas-2s7.pages.dev/","external":true,"credit":"undergravity","repo":"https://github.com/undergravity/human-atlas"},{"id":"external-bioscape","name":"3D 細胞","url":"https://sldyns.github.io/bioscape/#/","external":true,"credit":"Kun Qian（錢坤）","repo":"https://github.com/sldyns/bioscape"}]};
 function isSafeUrl(x){try{const u=new URL(x,location.href);return u.protocol==='https:'||u.protocol==='http:';}catch{return false;}}
 function normalize(list){
   if(!Array.isArray(list))throw new Error('單元格式錯誤');
@@ -18,6 +18,11 @@ function normalize(list){
     if(Array.isArray(e.children)&&e.children.length)t.children=e.children.map(norm).filter(Boolean);
     else if(isSafeUrl(e.url))t.url=e.url;
     else return null;
+    // These are links only: never convert external resources into offline modules.
+    if(e.external===true && t.url && new URL(t.url,location.href).protocol==='https:'){
+      t.external=true;
+      t.credit=typeof e.credit==='string'?e.credit.slice(0,72):'';
+    }
     if(e.entry?.type==='taxonomy'&&[1,2,3,4].includes(e.entry.stage))t.entry={type:'taxonomy',stage:e.entry.stage};
     return t;
   }
@@ -55,6 +60,26 @@ async function refreshOfflineLocations(){
  }catch(err){console.warn('目前不使用本機教材入口',err);}
 }
 function goHome(){if(location.hash){history.pushState(null,'',location.pathname+location.search);render();}}
+function updateGridLayout(){
+  if(grid.classList.contains('children')){
+    grid.style.removeProperty('--home-cols');
+    grid.style.removeProperty('--home-rows');
+    return;
+  }
+  // Retain the familiar three-column order when there is enough height.
+  // Grow columns only as necessary to keep future additions on one screen.
+  const count=catalog.length;
+  const width=grid.clientWidth||window.innerWidth;
+  const height=grid.parentElement?.clientHeight||Math.max(260,window.innerHeight-100);
+  let cols=width<650?2:3;
+  const maxCols=Math.max(cols,Math.min(count,Math.floor(width/145)));
+  const minTileHeight=width<650?83:95;
+  if(count>12 && width>=650)cols=Math.max(cols,Math.ceil(count/4));
+  while(cols<maxCols && Math.ceil(count/cols)*minTileHeight+(Math.ceil(count/cols)-1)*10>height)cols++;
+  cols=Math.min(maxCols,cols);
+  grid.style.setProperty('--home-cols',String(cols));
+  grid.style.setProperty('--home-rows',String(Math.ceil(count/cols)));
+}
 function render(){
   const current=sectionTopic(),entries=current?current.children:catalog;
   section.hidden=!current;
@@ -62,17 +87,32 @@ function render(){
   grid.classList.toggle('children',!!current);
   const offset=current?catalog.findIndex(t=>t.id===current.id)*2:0;
   const tiles=entries.map((e,i)=>{
-    const a=document.createElement('a');a.className='tile';a.style.backgroundColor=palette[(i+offset)%palette.length];
-    const title=document.createElement('span');title.textContent=e.name;a.append(title);
-    if(e.children){a.href='#/'+e.id;a.addEventListener('click',evt=>{evt.preventDefault();history.pushState(null,'',a.getAttribute('href'));render();});}
-    else a.href=destination(e);
+    const a=document.createElement('a');a.className='tile';
+    if(e.external){
+      a.classList.add('tile-external');
+      a.href=e.url;
+      a.target='_blank';
+      a.rel='noopener noreferrer';
+      a.setAttribute('aria-label',`${e.name}，外部連結，需連網使用，作者 ${e.credit}`);
+      const label=document.createElement('small');label.className='external-label';label.textContent='外部連結';
+      const title=document.createElement('span');title.className='external-title';title.textContent=e.name;
+      const credit=document.createElement('small');credit.className='external-credit';credit.textContent=`作者：${e.credit}`;
+      a.append(label,title,credit);
+    }else{
+      a.style.backgroundColor=palette[(i+offset)%palette.length];
+      const title=document.createElement('span');title.textContent=e.name;a.append(title);
+      if(e.children){a.href='#/'+e.id;a.addEventListener('click',evt=>{evt.preventDefault();history.pushState(null,'',a.getAttribute('href'));render();});}
+      else a.href=destination(e);
+    }
     return a;
   });
   grid.replaceChildren(...tiles);
+  updateGridLayout();
 }
 $('back-button').addEventListener('click',goHome);
 window.addEventListener('popstate',render);
 window.addEventListener('hashchange',render);
+window.addEventListener('resize',updateGridLayout);
 $('install-help').addEventListener('click',()=>dialog.showModal());
 $('close-install').addEventListener('click',()=>dialog.close());
 $('done-install').addEventListener('click',()=>dialog.close());
@@ -83,39 +123,4 @@ dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
   if(location.protocol==='https:'&&'serviceWorker' in navigator){
     navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('首頁快取未啟用',err));
   }
-})();
-
-// v5.4: Check for new shell versions on reconnect/foreground. Never delete module caches.
-(function setupPortalUpdates(){
- if(location.protocol!=='https:'||!('serviceWorker' in navigator))return;
- const banner=document.getElementById('update-banner');
- const now=document.getElementById('update-now');
- const dismiss=document.getElementById('update-dismiss');
- let reloading=false,hasPrompted=false;
- function show(){if(!hasPrompted){hasPrompted=true;banner.hidden=false;}}
- navigator.serviceWorker.addEventListener('controllerchange',()=>{
-   if(reloading)return;
-   // Only reload automatically after the user chose to update; never interrupt classwork.
-   if(sessionStorage.getItem('gg-update-accepted')==='1'){
-     reloading=true;sessionStorage.removeItem('gg-update-accepted');location.reload();
-   }else show();
- });
- now.addEventListener('click',async()=>{
-   banner.hidden=true;
-   sessionStorage.setItem('gg-update-accepted','1');
-   try{
-    const reg=await navigator.serviceWorker.getRegistration();
-    if(reg?.waiting){reg.waiting.postMessage({type:'SKIP_WAITING'});}
-    else location.reload();
-   }catch{location.reload();}
- });
- dismiss.addEventListener('click',()=>{banner.hidden=true;});
- async function check(){
-   if(!navigator.onLine)return;
-   try{const reg=await navigator.serviceWorker.getRegistration();if(reg)await reg.update();}
-   catch(err){console.warn('更新檢查稍後重試',err);}
- }
- window.addEventListener('online',check);
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)check();});
- window.addEventListener('load',()=>setTimeout(check,1200),{once:true});
 })();
